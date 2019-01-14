@@ -12,14 +12,16 @@ documentation is
 Data transfer
 -------------
 
-*wget* ("web get") is a tool for obtaining files from web servers
- using the command line.  The common usage is to pass wget a url, e.g.
+[wget](https://www.gnu.org/software/wget/manual/html_node/index.html) ("web get")
+is a tool for obtaining files from web servers
+using the command line.  The common usage is to pass wget a url, e.g.
 
 ```
 > wget https://en.wikipedia.org/wiki/Wget
 ```
 
-*scp* ("secure copy") transfers files between computers, and handles
+[scp](http://tldp.org/LDP/GNU-Linux-Tools-Summary/html/x9094.htm)
+ ("secure copy") transfers files between computers, and handles
  login authentication when needed.  The basic pattern is `scp from
  to`, where *from* and *to* specify some combination of the user, the
  host, and the file name.  In the example below, we copy a file named
