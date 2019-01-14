@@ -31,7 +31,7 @@ not contain complex quoted patterns, so many CSV files can be productively manip
 using Unix tools.
 
 ```
-> wget github.com/kshedden/cscar-unix-data/raw/NHANES/DEMO_H.csv.gz
+> wget github.com/kshedden/cscar-unix-data/raw/master/NHANES/DEMO_H.csv.gz
 ```
 
 
