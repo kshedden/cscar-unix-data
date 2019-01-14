@@ -1,5 +1,5 @@
-Linux command line workshop
-===========================
+CSCAR workshop: Data processing on the UNIX command line
+========================================================
 
 __Workshop contents:__
 

@@ -27,10 +27,10 @@ By 2010 UNIX variants became the main OS running the cloud (search,
 web applications) as well as commercial information systems
 (databases, etc.).
 
-What's in store for late 2010's and beyond?  [Virtual
+What's in store for 2020 and beyond?  [Virtual
 machines](https://en.wikipedia.org/wiki/Operating-system-level_virtualization),
-container-based architectures, OS support for hardware innovation
-(increasing number of cores, flash memory), ...  Almost 50 years from
+container-based architectures, support for hardware innovations
+(increasing number of cores, GPUs, flash memory), ...  Almost 50 years from
 its origins, UNIX continues to be highly adaptable and relevant OS
 framework.
 

@@ -16,7 +16,7 @@ luigi.dsc.umich.edu
 flux-login.arc-ts.umich.edu (requires two-factor authentication)
 ```
 
-If you do not have an AFS/IFS allocation you will not be able to
+If you do not have an AFS/IFS allocation you may not be able to
 connect to these machines.  You can request an allocation at the
 following page:
 

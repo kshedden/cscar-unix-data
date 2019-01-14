@@ -38,6 +38,40 @@ to *login.itd.umich.edu*:
 scp filename kshedden@login.itd.umich.edu.
 ```
 
+Compression and archiving of files
+----------------------------------
+
+The most common compression format is probably
+[gzip](https://en.wikipedia.org/wiki/Gzip).  To compress one or more
+files use `gzip <files>`, and to decompress them use `gunzip <files>`.
+Other compression formats/utilities include `bzip2`, `xz`, and the
+Windows-compatible `zip`/`unzip`.
+
+Gzip compressed files should have names ending in *.gz*.  Many tools
+such as emacs and less can read compressed files without decompressing
+on-disk, i.e. if you run `less file.gz` you will see the decompressed
+contents of the file.  Some tools such as grep provide an alternate
+version (`zgrep`) for handling compressed inputs.  Many programming
+languages can also read compressed files directly without on-disk
+decompression.  In general, once you compress a file using gzip you
+should not have to decompress it ever again.
+
+If a command line tool does not support gzip files directly, you can
+use a pipe to decompress the file on-the-fly.  For example, if you
+want to know how many lines of the compressed file *filename.gz*
+contain the text string *term*, you can use:
+
+```
+> gzip -dc <filename.gz> | grep <term> | wc -l
+```
+
+*Archiving* creates a single file that contains the contents of many
+ files.  It is a reversible process, so the archive can, say, be
+ transferred to another machine and then opened up.  The UNIX archive
+ utility is called `tar`.  Use `tar -xvf files.tar` to restore the
+ individual files, and use `tar -cvf archive.tar file1 file2...` to
+ create an archive.
+
 Working with text files
 -----------------------
 
@@ -87,36 +121,3 @@ using the comma character as a delimiter:
 
 Other useful utilities for working with text files are `join` and `comm`.
 
-Compressing and archiving files
--------------------------------
-
-The most common compression format is probably
-[gzip](https://en.wikipedia.org/wiki/Gzip).  To compress one or more
-files use `gzip <files>`, and to decompress them use `gunzip <files>`.
-Other compression formats/utilities include `bzip2`, `xz`, and the
-Windows-compatible `zip`/`unzip`.
-
-Gzip compressed files should have names ending in *.gz*.  Many tools
-such as emacs and less can read compressed files without decompressing
-on-disk, i.e. if you run `less file.gz` you will see the decompressed
-contents of the file.  Some tools such as grep provide an alternate
-version (`zgrep`) for handling compressed inputs.  Many programming
-languages can also read compressed files directly without on-disk
-decompression.  In general, once you compress a file using gzip you
-should not have to decompress it ever again.
-
-If a command line tool does not support gzip files directly, you can
-use a pipe to decompress the file on-the-fly.  For example, if you
-want to know how many lines of the compressed file *filename.gz*
-contain the text string *term*, you can use:
-
-```
-> gzip -dc <filename.gz> | grep <term> | wc -l
-```
-
-*Archiving* creates a single file that contains the contents of many
- files.  It is a reversible process, so the archive can, say, be
- transferred to another machine and then opened up.  The UNIX archive
- utility is called `tar`.  Use `tar -xvf files.tar` to restore the
- individual files, and use `tar -cvf archive.tar file1 file2...` to
- create an archive.
