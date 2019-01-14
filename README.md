@@ -18,3 +18,5 @@ __Workshop contents:__
 [Editors](editors.md)
 
 [Utilities for manipulating data](utilities.md)
+
+[NHANES case study](nhanes.md)
