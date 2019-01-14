@@ -75,7 +75,11 @@ contain the text string *term*, you can use:
 Working with text files
 -----------------------
 
-*cat* ("concatenate") combines the contents of several text files
+Here we cover some basic tools for working with text files, more advanced
+tools like sed and awk are covered in a separate section.
+
+[cat](https://www.gnu.org/software/coreutils/manual/html_node/cat-invocation.html#cat-invocation) ("concatenate")
+ combines the contents of several text files
  sequentially.  By default, the results go to the screen ("standard
  output"), but typically this will be redirected to a file:
 
@@ -83,12 +87,14 @@ Working with text files
 > cat file1 file2 > result
 ```
 
-*grep* is used to search text files.  It has many features and
+[grep](https://www.gnu.org/software/grep/manual/grep.html)
+ is used to search text files.  It has many features and
  options.  The most basic usage is `grep <term> <file>`, which returns
  all lines of the file named *file* that contain the text term *term*.
 
 
-*wc* ("word count") is used to count words or lines in a text file.  A
+[wc](https://www.gnu.org/software/coreutils/manual/html_node/wc-invocation.html) ("word count")
+ is used to count words or lines in a text file.  A
  basic usage is `wc -l filename` to count the lines in a file.  It is
  often used together with grep to determine how many lines match a
  given pattern, e.g.
@@ -97,7 +103,8 @@ Working with text files
 > grep word files | wc -l
 ```
 
-*sort* takes the lines of all input files together and sorts them.  A
+[sort](https://www.gnu.org/software/coreutils/manual/html_node/sort-invocation.html)
+takes the lines of all input files together and sorts them.  A
 basic usage would be `sort file1 file2 > output`.  It is capable of
 sorting very large files out-of-memory.  There are many options, for
 example, if we have a csv file we can sort based on the third column
@@ -107,11 +114,14 @@ using the comma character as a delimiter:
 > sort -k3,3 -t ',' file
 ```
 
-*paste* combines multiple input files horizontally (as opposed to
+[paste](https://www.gnu.org/software/coreutils/manual/html_node/paste-invocation.html)
+ combines multiple input files horizontally (as opposed to
  `cat` which combines files vertically).  Basic usage is `paste file1
  file2 > output`.
 
-*head* and *tail* extract the first or last 10 lines of a file and
+[head](https://www.gnu.org/software/coreutils/manual/html_node/head-invocation.html) and
+[tail](https://www.gnu.org/software/coreutils/manual/html_node/tail-invocation.html)
+ extract the first or last 10 lines of a file and
  write them to standard output (screen).  The number of lines is
  configurable using the `-n` flag, e.g.
 
@@ -119,5 +129,25 @@ using the comma character as a delimiter:
 > head -n50 file.csv
 ```
 
-Other useful utilities for working with text files are `join` and `comm`.
+[join](https://www.gnu.org/software/coreutils/manual/html_node/join-invocation.html#join-invocation)
+ merges (joins) two files on a common key.  Both of the files being merged must be sorted before
+ invoking `join`.  The join is an "outer join" - all combinations of matching keys are included
+ in the result.
+
+ ```
+> sort -k 7 file1.txt > file1_sorted.txt
+> sort -k 3 file2.txt > file2_sorted.txt
+> join -1 7 -2 3 file1_sorted.txt file2_sorted.txt > joined.txt
+ ```
+
+[comm](https://www.gnu.org/software/coreutils/manual/html_node/comm-invocation.html)
+identifies mathing lines in two (pre-sorted) files.  By default, the output has three
+columns: the first column contains lines unique to file 1, the second column contains
+files unique to file 2, and the third column contains lines present in both files.
+
+```
+> comm file1.txt file2.txt
+> comm -12 file1.txt file2.txt # Only print lines that are in both files
+> comm -2 file1.txt file2.txt # Only print lines that are unique to file 2
+```
 
