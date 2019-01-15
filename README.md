@@ -21,4 +21,4 @@ __Workshop contents:__
 
 [NHANES case study](nhanes.md)
 
-[Australia weather case study](australia.md)
+[Australian weather case study](australia.md)

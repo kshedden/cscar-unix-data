@@ -19,3 +19,16 @@ cat index.html | grep -o 'href="[^"]*.txt"' | \
    sed -e "s/href=\"/http:\/\/www.bom.gov.au/g" -e"s/\"$//g" > urls
 wget -i urls -P data
 ```
+
+The first call to `wget` downloads the html source for the page given above.  We can
+inspect this source (open it with `less`) to see that the data file names end in
+`.txt`, and are stated in the html file as relative links with this form:
+
+```
+href="/climate/change/acorn/sat/data/acorn.sat.minT.002012.daily.txt"
+```
+
+Therefore, we can use `grep` to locate all the relevant URLs in the html file using
+`grep`.  We then use `sed` to restructure each relative URL as a full URL.  Finally,
+we use `wget` with the `-i` option to download all the data files into a directory
+called "data".
