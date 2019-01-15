@@ -4,7 +4,7 @@ Case study using NHANES data
 Here we demonstrate how Unix command-line tools can be put to use
 to carry out some practical data manipulations with the
 [NHANES](https://www.cdc.gov/nchs/nhanes/index.htm) data.
-NHANES is a major recurring cross-sectional survey of the US
+NHANES is an ongoing multi-wave cross-sectional survey of the US
 population that collects many hundreds of variables per subject.
 The variables are split across multiple files and some non-trivial
 data management tasks commonly arise when working with these data.
@@ -24,7 +24,8 @@ pd.read_sas("DEMO_H.XPT").to_csv("DEMO_H.csv.gz", compression="gzip")
 
 **A caveat:** Since we are working with text/csv files here, it's worth pointing out that there
 is a formal specification for this format called [RFC 4180](https://tools.ietf.org/html/rfc4180).
-This specification deals with some special issues like delimiters (",") embedded in strings.  Not
+This specification deals with some special issues like delimiters (e.g. ",") embedded in strings,
+strings embedded in strings, and so on.  Not
 all Unix tools are capable of processing all CSV files properly (these are tools
 for working with generic text data, not for CSV specifically).  However most csv data files do
 not contain complex quoted patterns, so many CSV files can be productively manipulated
@@ -34,9 +35,9 @@ We have converted the three files used here to text/csv and included them with t
 of this tutorial.  You can download them with the following commands:
 
 ```
-> wget github.com/kshedden/cscar-unix-data/raw/master/NHANES/DEMO_H.csv.gz
-> wget github.com/kshedden/cscar-unix-data/raw/master/NHANES/BMX_H.csv.gz
-> wget github.com/kshedden/cscar-unix-data/raw/master/NHANES/BPX_H.csv.gz
+wget github.com/kshedden/cscar-unix-data/raw/master/NHANES/DEMO_H.csv.gz
+wget github.com/kshedden/cscar-unix-data/raw/master/NHANES/BMX_H.csv.gz
+wget github.com/kshedden/cscar-unix-data/raw/master/NHANES/BPX_H.csv.gz
 ```
 
 In general, it is better to leave data files compressed rather than decompressing
@@ -62,9 +63,9 @@ While we could leave the files compressed, for simplicity, here we will decompre
 before proceeding
 
 ```
-> gunzip DEMO_H.csv.gz
-> gunzip BMX_H.csv.gz
-> gunzip BPX_H.csv.gz
+gunzip DEMO_H.csv.gz
+gunzip BMX_H.csv.gz
+gunzip BPX_H.csv.gz
 ```
 
 ## How many records are there?
@@ -86,9 +87,11 @@ cut -d, -f2 BMX_H.csv | sort -u | wc -l
 cut -d, -f2 BPX_H.csv | sort -u | wc -l
 ```
 
-## Who is in the demographics file but not in the BMX file?
+## Who is in the demographics file but not in the body measurements file?
 
-Use process substitution to compose complex commands:
+Use process substitution to compose complex commands, `<(...)` runs the
+code in ... and returns the results to `comm` as if it were reading
+from a file.
 
 ```
 comm -23 <(cut -d, -f2 DEMO_H.csv | sort) <(cut -d, -f2 BMX_H.csv | sort)
@@ -102,17 +105,31 @@ cut -d, -f6 DEMO_H.csv | sort | uniq -c | sort -k2 -n
 
 ## Remove '.0' from the trailing end of numbers
 
+[Sed](https://www.gnu.org/software/sed/) is a programming language
+for manipulating text files.  It is especially useful when you
+want to change the contents of a text file. It is too complex to cover systematically
+here, but we can illustrate its capabilities with a few examples.
+
 ```
 cat DEMO_H.csv | sed -e 's/.0$//g' -e 's/.0,/,/g'
 ```
 
 ## Get a frequency table of genders in the file
 
+[Awk](https://www.gnu.org/software/gawk/manual/gawk.html) is a programming
+language for manipulating text files.  It is used to filter and summarize
+text files, rather than to edit them (like Sed).  We can't cover Awk systematically
+here, but its capabilities can be seen through a few examples like
+this one:
+
 ```
 awk -F "," 'NR > 1 {count[$5]++}END{for(j in count) print j,count[j]}' DEMO_H.csv
 ```
 
 ## Merge the demographic and body measurements data on the SEQN key
+
+We need to sort the files before joining. To avoid hitting the disk,
+we can use process substitution and pipes:
 
 ```
 join -1 2 -2 2 -t, <(sort -k2 -t, DEMO_H.csv) <(sort -k2 -t, BMX_H.csv)
@@ -127,7 +144,7 @@ awk -F, 'NR == 1 || int($5)==2' DEMO_H.csv > females.csv
 awk -F, 'NR == 1 || int($5)==1' DEMO_H.csv > males.csv
 ```
 
-## Split file by age and gender
+## Subset file by age and gender
 
 Retain only women over 40:
 

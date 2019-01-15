@@ -2,10 +2,10 @@ UNIX utilities
 ==============
 
 A large number of utility programs are installed on most UNIX systems.
-Most of these are developed and maintain as part of the [GNU core
+Most of these are developed and maintained as part of the [GNU core
 utilities](https://www.gnu.org/software/coreutils/coreutils.html).
-Many of these utilities are installed in the directory `/usr/bin`.  We
-will discuss just a few of them here.  A longer list of tools with
+The binary executables for any of these utilities are installed in the directory `/usr/bin`.  We
+will discuss just a few of these tools here.  A longer list of tools with
 documentation is
 [here](http://www.tldp.org/LDP/GNU-Linux-Tools-Summary/html/book1.htm).
 
@@ -82,7 +82,8 @@ tools like sed and awk are covered in a separate section.  Note that most
 of these utilities operate on "data streams", meaning that the data
 are incrementally transformed rather then being read all at once and
 transformed as a chunk.  This allows these tools to work with data files
-that are much larger than the memory.  Note that a few processing algorithms
+that are much larger than the memory.  Note that a few important data
+processing algorithms
 like sorting cannot be carried out in a streaming manner, but there are still
 work-arounds in the sort implementation that allow it to work on files
 that are larger than memory.
@@ -124,8 +125,8 @@ using the comma character as a delimiter:
 > sort -k3,3 -t ',' file
 ```
 
-Note that this is an [external sort](https://en.wikipedia.org/wiki/External_sorting)
-that never needs to read an entire file into memory at once.
+Note that Gnu sort uses an [external sort](https://en.wikipedia.org/wiki/External_sorting)
+algorithm that never needs to read an entire file into memory at once.
 
 [paste](https://www.gnu.org/software/coreutils/manual/html_node/paste-invocation.html)
  combines multiple input files horizontally (as opposed to
