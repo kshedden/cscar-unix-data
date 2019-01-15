@@ -51,7 +51,7 @@ and you will see the uncompressed contents of this file, even though the file re
 compressed on disk.
 
 The `zcat` or `gzip -dc` commands can be used to decompress a file "on the fly", which
-is often used to pipe a decompressed stream into another program.
+can be used to decompress and pipe a stream into another program:
 
 ```
 zcat DEMO_H.csv.gz | wc -l
@@ -67,7 +67,7 @@ before proceeding
 > gunzip BPX_H.csv.gz
 ```
 
-# How many records?
+## How many records are there?
 
 A basic task is to determine how many records (lines of text) are present in
 each of the three files:
@@ -78,7 +78,7 @@ wc -l BMX_H.csv
 wc -l BPX_H.csv
 ```
 
-# How many unique identifiers?
+## How many unique identifiers are there?
 
 ```
 cut -d, -f2 DEMO_H.csv | sort -u | wc -l
@@ -86,7 +86,7 @@ cut -d, -f2 BMX_H.csv | sort -u | wc -l
 cut -d, -f2 BPX_H.csv | sort -u | wc -l
 ```
 
-# Who is in the demographics file but not in the BMX file?
+## Who is in the demographics file but not in the BMX file?
 
 Use process substitution to compose complex commands:
 
@@ -94,26 +94,44 @@ Use process substitution to compose complex commands:
 comm -23 <(cut -d, -f2 DEMO_H.csv | sort) <(cut -d, -f2 BMX_H.csv | sort)
 ```
 
-# How many people have each distinct age?
+## How many people have each distinct age?
 
 ```
 cut -d, -f6 DEMO_H.csv | sort | uniq -c | sort -k2 -n
 ```
 
-# Remove '.0' from the trailing end of numbers
+## Remove '.0' from the trailing end of numbers
 
 ```
 cat DEMO_H.csv | sed -e 's/.0$//g' -e 's/.0,/,/g'
 ```
 
-# Get a frequency table of genders in the file
+## Get a frequency table of genders in the file
 
 ```
 awk -F "," 'NR > 1 {count[$5]++}END{for(j in count) print j,count[j]}' DEMO_H.csv
 ```
 
-# Merge the demographic and body measurements data on the SEQN key
+## Merge the demographic and body measurements data on the SEQN key
 
 ```
 join -1 2 -2 2 -t, <(sort -k2 -t, DEMO_H.csv) <(sort -k2 -t, BMX_H.csv)
 ```
+
+## Split file by gender
+
+`NR == 1` always prints header row
+
+```
+awk -F, 'NR == 1 || int($5)==2' DEMO_H.csv > females.csv
+awk -F, 'NR == 1 || int($5)==1' DEMO_H.csv > males.csv
+```
+
+## Split file by age and gender
+
+Retain only women over 40:
+
+```
+awk -F, 'NR == 1 || ((int($5) == 2) && (int($6) > 40))' DEMO_H.csv
+```
+
