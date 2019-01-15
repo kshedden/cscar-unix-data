@@ -120,7 +120,7 @@ join -1 2 -2 2 -t, <(sort -k2 -t, DEMO_H.csv) <(sort -k2 -t, BMX_H.csv)
 
 ## Split file by gender
 
-`NR == 1` always prints header row
+`NR == 1` always prints the header row
 
 ```
 awk -F, 'NR == 1 || int($5)==2' DEMO_H.csv > females.csv

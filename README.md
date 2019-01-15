@@ -20,3 +20,5 @@ __Workshop contents:__
 [Utilities for manipulating data](utilities.md)
 
 [NHANES case study](nhanes.md)
+
+[Australia weather case study](australia.md)
