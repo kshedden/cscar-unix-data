@@ -1,9 +1,9 @@
-Case study using Australia climate data
-=======================================
+Case study using Australian climate data
+========================================
 
 The Australian government provides data on daily temperature extremes
 (daily maximum/daily minimum) at 120 locations in Australia. The data
-are available from this site (under "Sortable list of ACORN-SAT stations
+are available from the site below (under "Sortable list of ACORN-SAT stations
 with linked data"):
 
 http://www.bom.gov.au/climate/change/acorn-sat/#tabs=Data-and-networks
@@ -23,7 +23,7 @@ cat index.html | grep -o 'href="[^"]*.txt"' | \
 wget -i urls -P data
 ```
 
-The first call to `wget` downloads the html source for the page given above.  We can
+The first call to `wget` above downloads the html source for the page given above.  We can
 inspect this html (open it with `less`) to see that the data file names end in
 `.txt`, and are given in the html file as relative links with this form:
 
@@ -31,8 +31,8 @@ inspect this html (open it with `less`) to see that the data file names end in
 href="/climate/change/acorn/sat/data/acorn.sat.minT.002012.daily.txt"
 ```
 
-Therefore, we can use `grep` to locate all the relevant URLs in the html file using
-`grep`.  We then use `sed` to restructure each relative URL as a full URL.  Finally,
+Therefore, we can use `grep` to locate all the relevant URLs in the html file.
+We then use `sed` to restructure each relative URL as a full URL.  Finally,
 we use `wget` with the `-i` option to download all the data files into a directory
 called "data".
 
@@ -54,8 +54,8 @@ lines of each file do not contain data, so we use `tail` below to remove these
 lines prior to joining the files.  The merge is done on the date, which is
 in the first column of all files (the default location of the join key).
 The rows of each file are sorted by date, so no further sorting is needed.
-A final issues, is that these source files contain windows-style newlines
-(\r\n) so we use `sed` to remove the extra `\r` characters that are present
+A final issue is that these source files contain windows-style newlines
+(\r\n) so we use `sed` to remove the extra `\r` characters that remain
 after the merge.
 
 ```

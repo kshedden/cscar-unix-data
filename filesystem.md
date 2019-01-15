@@ -4,12 +4,13 @@ Working with the filesystem
 Two major UNIX principles:
 
 * "Everything is a file" -- a file can be a program, data, a device
-  (e.g. printer or thumb drive); "data" files can have any format and
+  (e.g. printer or thumb drive); "data files" can have any format and
   the file name does not need to convey the format; there is no
   metadata conveying how to interpret file contents; locks are
-  advisory and are not often encountered by users
+  advisory and implemented at the application level, not the system
+  level.
 
-* The filesystem hides its implementation and hardware configuration;
+* The filesystem hides its implementation and underlying hardware configuration;
   what we see as the filesystem on one machine may be physically
   stored on multiple local disks or other storage devices, or on other
   computers accessible via the network

@@ -14,7 +14,7 @@ shell, you can use the `exit` command or (in some cases) type
 `ctrl-d`.
 
 We will focus on the bash shell here and we will only scratch the
-surface of what it can do.  Some of what we disuss below is not
+surface of what it can do.  Note that some of what we disuss below is not
 strictly speaking part of the shell (e.g. pipes) but since these
 features are used through the shell and interact heavily with other
 shell features, we discuss these topics here.
@@ -55,8 +55,9 @@ Pipes
 -----
 
 Pipes are used to treat the output of one command as the input to
-another.  For now we will give two simple examples, and we will see
-more complex examples when we discuss using OS tools:
+another.  For now we will give two simple examples, and later we will
+see
+more complex examples when we discuss using the core utilities:
 
 List the directory contents and view the results in the viewer
 [less](https://www.gnu.org/software/less):
