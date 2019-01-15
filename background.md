@@ -27,6 +27,10 @@ By 2010 UNIX variants became the main OS running the cloud (search,
 web applications) as well as commercial information systems
 (databases, etc.).
 
+By 2018, Microsoft began providing a Unix/Linux
+[compatability layer](https://en.wikipedia.org/wiki/Windows_Subsystem_for_Linux)
+with Windows.
+
 What's in store for 2020 and beyond?  [Virtual
 machines](https://en.wikipedia.org/wiki/Operating-system-level_virtualization),
 container-based architectures, support for hardware innovations

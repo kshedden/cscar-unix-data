@@ -78,7 +78,15 @@ Working with text files
 -----------------------
 
 Here we cover some basic tools for working with text files, more advanced
-tools like sed and awk are covered in a separate section.
+tools like sed and awk are covered in a separate section.  Note that most
+of these utilities operate on "data streams", meaning that the data
+are incrementally transformed rather then being read all at once and
+transformed as a chunk.  This allows these tools to work with data files
+that are much larger than the memory.  Note that a few processing algorithms
+like sorting cannot be carried out in a streaming manner, but there are still
+work-arounds in the sort implementation that allow it to work on files
+that are larger than memory.
+
 
 [cat](https://www.gnu.org/software/coreutils/manual/html_node/cat-invocation.html#cat-invocation) ("concatenate")
  combines the contents of several text files
@@ -116,10 +124,18 @@ using the comma character as a delimiter:
 > sort -k3,3 -t ',' file
 ```
 
+Note that this is an [external sort](https://en.wikipedia.org/wiki/External_sorting)
+that never needs to read an entire file into memory at once.
+
 [paste](https://www.gnu.org/software/coreutils/manual/html_node/paste-invocation.html)
  combines multiple input files horizontally (as opposed to
  `cat` which combines files vertically).  Basic usage is `paste file1
  file2 > output`.
+
+[cut](https://www.gnu.org/software/coreutils/manual/html_node/The-cut-command.html)
+is mainly used for extracting specific fields from a delimited file.  For a CSV
+file, `cut -d, -f2 file.csv` would extract the second field, using a comma as the
+delimiter.
 
 [head](https://www.gnu.org/software/coreutils/manual/html_node/head-invocation.html) and
 [tail](https://www.gnu.org/software/coreutils/manual/html_node/tail-invocation.html)
